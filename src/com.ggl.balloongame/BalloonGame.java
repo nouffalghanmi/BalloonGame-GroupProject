@@ -15,5 +15,5 @@ public class BalloonGame implements Runnable {
 	public void run() {
 		new BalloonGameFrame(new BalloonGameModel());
 	}
-//
+
 }
