@@ -3,20 +3,30 @@ package com.ggl.balloongame.model;
 import java.awt.Color;
 import java.awt.Point;
 
-public class Balloon {
+public class Balloon implements BalloonPrototype {
 	
 	private int radius;
 	
 	private Color color;
 	
-	private final Point centerPoint;
+	private Point centerPoint;
 
-	public Balloon(Point centerPoint, Color color) {
+	public Balloon(Point centerPoint, Color color, int radius) {
 		this.centerPoint = centerPoint;
 		this.color = color;
-		this.radius = 10;
+		this.radius = radius;
 	}
 	
+
+	@Override 
+	public Balloon clone() {
+    return new Balloon(
+            new Point(this.centerPoint),
+            this.color,
+            this.radius
+    );
+	}
+
 	public void expand() {
 		this.radius += (int) (Math.random() * 6 + 4);
 	}
@@ -44,6 +54,10 @@ public class Balloon {
 
 	public Point getCenterPoint() {
 		return centerPoint;
+	}
+
+	public void setCenterPoint(Point centerPoint) {
+		this.centerPoint = centerPoint;
 	}
 
 }

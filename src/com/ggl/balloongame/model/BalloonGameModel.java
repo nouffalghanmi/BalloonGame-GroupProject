@@ -16,6 +16,7 @@ public class BalloonGameModel {
 	
 	private final List<Balloon> validBalloons;
 	private final List<Balloon> poppedBalloons;
+	private final Balloon[] balloonPrototypes;
 
 	public BalloonGameModel() {
 		this.highScore = 0;
@@ -24,6 +25,12 @@ public class BalloonGameModel {
 		this.poppedBalloons = new ArrayList<>();
 		this.drawingPanelDimension = new Dimension(800, 640);
 		this.isGameOver = false;
+
+		this.balloonPrototypes = new Balloon[] {
+    	new Balloon(new Point(0, 0), Color.RED, 10),
+    	new Balloon(new Point(0, 0), Color.BLUE, 10),
+    	new Balloon(new Point(0, 0), Color.MAGENTA, 10)
+};
 	}
 	
 	public void initialize() {
@@ -35,19 +42,21 @@ public class BalloonGameModel {
 	}
 	
 	public void createBalloons(int count) {
-		Color[] colors = { Color.RED, Color.BLUE, Color.MAGENTA};
 		int border = 150;
 		int doubleBorder = border + border;
 
 		int index = 0;
+
 		while (index < count) {
-			int colorIndex = (int) (Math.random() * colors.length);
+			int prototypeIndex = (int) (Math.random() * balloonPrototypes.length);
 			int x = (int) (Math.random()
 					* (drawingPanelDimension.width - doubleBorder) + border);
 			int y = (int) (Math.random()
 					* (drawingPanelDimension.height - doubleBorder) + border);
-			Balloon balloon = new Balloon(new Point(x, y), colors[colorIndex]);
+			Balloon balloon = balloonPrototypes[prototypeIndex].clone();
 			
+			balloon.setCenterPoint(new Point(x, y));
+
 			if (!isTouching(balloon)) {
 				validBalloons.add(balloon);
 				index++;
