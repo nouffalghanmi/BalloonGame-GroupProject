@@ -15,7 +15,7 @@ public class BalloonGameModel {
 	
 	private final List<Balloon> validBalloons;
 	private final List<Balloon> poppedBalloons;
-	private final BalloonFactory balloonFactory;
+	private final BalloonCreator[] creators;
 
 	public BalloonGameModel() {
 		this.highScore = 0;
@@ -24,7 +24,11 @@ public class BalloonGameModel {
 		this.poppedBalloons = new ArrayList<>();
 		this.drawingPanelDimension = new Dimension(800, 640);
 		this.isGameOver = false;
-		this.balloonFactory = new BalloonFactory();
+		this.creators = new BalloonCreator[] {
+    new RedBalloonCreator(),
+    new BlueBalloonCreator(),
+    new MagentaBalloonCreator()
+};
 	}
 	
 	public void initialize() {
@@ -48,7 +52,8 @@ public class BalloonGameModel {
 					* (drawingPanelDimension.height - doubleBorder) + border);
 
 			// Factory Pattern: الفاكتوري هو اللي ينشئ البالون
-			Balloon balloon = balloonFactory.createRandomBalloon(new Point(x, y));
+		BalloonCreator creator = creators[(int) (Math.random() * creators.length)];
+Balloon balloon = creator.createBalloon(new Point(x, y));
 
 			if (!isTouching(balloon)) {
 				validBalloons.add(balloon);
