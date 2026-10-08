@@ -1,6 +1,5 @@
 package com.ggl.balloongame.model;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ public class BalloonGameModel {
 	
 	private final List<Balloon> validBalloons;
 	private final List<Balloon> poppedBalloons;
-	private final Balloon[] balloonPrototypes;
+	private final BalloonFactory balloonFactory;
 
 	public BalloonGameModel() {
 		this.highScore = 0;
@@ -25,12 +24,7 @@ public class BalloonGameModel {
 		this.poppedBalloons = new ArrayList<>();
 		this.drawingPanelDimension = new Dimension(800, 640);
 		this.isGameOver = false;
-
-		this.balloonPrototypes = new Balloon[] {
-    	new Balloon(new Point(0, 0), Color.RED, 10),
-    	new Balloon(new Point(0, 0), Color.BLUE, 10),
-    	new Balloon(new Point(0, 0), Color.MAGENTA, 10)
-};
+		this.balloonFactory = new BalloonFactory();
 	}
 	
 	public void initialize() {
@@ -48,14 +42,13 @@ public class BalloonGameModel {
 		int index = 0;
 
 		while (index < count) {
-			int prototypeIndex = (int) (Math.random() * balloonPrototypes.length);
 			int x = (int) (Math.random()
 					* (drawingPanelDimension.width - doubleBorder) + border);
 			int y = (int) (Math.random()
 					* (drawingPanelDimension.height - doubleBorder) + border);
-			Balloon balloon = balloonPrototypes[prototypeIndex].clone();
-			
-			balloon.setCenterPoint(new Point(x, y));
+
+			// Factory Pattern: الفاكتوري هو اللي ينشئ البالون
+			Balloon balloon = balloonFactory.createRandomBalloon(new Point(x, y));
 
 			if (!isTouching(balloon)) {
 				validBalloons.add(balloon);
