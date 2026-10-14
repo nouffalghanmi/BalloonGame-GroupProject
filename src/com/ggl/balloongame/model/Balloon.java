@@ -3,7 +3,7 @@ package com.ggl.balloongame.model;
 import java.awt.Color;
 import java.awt.Point;
 
-public class Balloon implements BalloonPrototype {
+public abstract class Balloon implements BalloonPrototype {
 	
 	private int radius;
 	
@@ -19,13 +19,7 @@ public class Balloon implements BalloonPrototype {
 	
 
 	@Override 
-	public Balloon clone() {
-    return new Balloon(
-            new Point(this.centerPoint),
-            this.color,
-            this.radius
-    );
-	}
+	public abstract Balloon clone();
 
 	public void expand() {
 		this.radius += (int) (Math.random() * 6 + 4);

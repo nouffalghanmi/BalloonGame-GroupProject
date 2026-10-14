@@ -1,6 +1,5 @@
 package com.ggl.balloongame.model;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -13,10 +12,10 @@ public class BalloonGameModel {
 	private int highScore, score;
 	
 	private final Dimension drawingPanelDimension;
-	
 	private final List<Balloon> validBalloons;
 	private final List<Balloon> poppedBalloons;
 	private final Balloon[] balloonPrototypes;
+	private final BalloonFactory balloonFactory;
 
 	public BalloonGameModel() {
 		this.highScore = 0;
@@ -26,11 +25,14 @@ public class BalloonGameModel {
 		this.drawingPanelDimension = new Dimension(800, 640);
 		this.isGameOver = false;
 
+		this.balloonFactory =
+                new BalloonFactory();
+
 		this.balloonPrototypes = new Balloon[] {
-    	new Balloon(new Point(0, 0), Color.RED, 10),
-    	new Balloon(new Point(0, 0), Color.BLUE, 10),
-    	new Balloon(new Point(0, 0), Color.MAGENTA, 10)
-};
+			balloonFactory.getBalloon("RED"),
+        	balloonFactory.getBalloon("BLUE"),
+        	balloonFactory.getBalloon("MAGENTA")
+		};
 	}
 	
 	public void initialize() {
