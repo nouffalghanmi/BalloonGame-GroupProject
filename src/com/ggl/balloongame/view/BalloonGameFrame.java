@@ -1,10 +1,11 @@
 package com.ggl.balloongame.view;
 
+import com.ggl.balloongame.model.BalloonGameFacade;
+import com.ggl.balloongame.model.BalloonGameModel;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,11 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
-import com.ggl.balloongame.model.BalloonGameModel;
-
 public class BalloonGameFrame {
 	
 	private final BalloonGameModel model;
+	private final BalloonGameFacade facade;
 	
 	private final DrawingPanel drawingPanel;
 	
@@ -29,6 +29,7 @@ public class BalloonGameFrame {
 
 	public BalloonGameFrame(BalloonGameModel model) {
 		this.model = model;
+		this.facade = new BalloonGameFacade(model);
 		this.drawingPanel = new DrawingPanel(this, model);
 		this.frame = createAndShowGUI();
 	}
@@ -86,12 +87,10 @@ public class BalloonGameFrame {
 		gbc.insets = new Insets(0, 5, 5, 5);
 		JButton newGameButton = new JButton("New Game");
 		newGameButton.addActionListener(event -> {
-			model.initialize();
 			int count = slider.getValue();
-			model.createBalloons(count);
-			model.calculateScore();
-			updateControlPanel();
-			repaint();
+            facade.startNewGame(count);
+            updateControlPanel();
+            repaint();
 		});
 		panel.add(newGameButton, gbc);
 		
