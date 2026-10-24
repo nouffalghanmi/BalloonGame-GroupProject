@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import com.ggl.balloongame.controller.BalloonListener;
 import com.ggl.balloongame.model.Balloon;
 import com.ggl.balloongame.model.BalloonGameModel;
+import com.ggl.balloongame.controller.BalloonGameFacade;
 
 public class DrawingPanel extends JPanel {
 
@@ -16,11 +17,11 @@ public class DrawingPanel extends JPanel {
 	
 	private final BalloonGameModel model;
 
-	public DrawingPanel(BalloonGameFrame view, BalloonGameModel model) {
-		this.model = model;
-		this.setPreferredSize(model.getDrawingPanelDimension());
-		this.addMouseListener(new BalloonListener(view, model));
-	}
+	public DrawingPanel(BalloonGameModel model, BalloonGameFacade facade) {
+    this.model = model;
+    this.setPreferredSize(model.getDrawingPanelDimension());
+    this.addMouseListener(new BalloonListener(facade));
+}
 	
 	@Override
 	protected void paintComponent(Graphics g) {

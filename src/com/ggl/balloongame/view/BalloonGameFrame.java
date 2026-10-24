@@ -1,6 +1,6 @@
 package com.ggl.balloongame.view;
 
-import com.ggl.balloongame.model.BalloonGameFacade;
+import com.ggl.balloongame.controller.BalloonGameFacade;
 import com.ggl.balloongame.model.BalloonGameModel;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -29,8 +29,8 @@ public class BalloonGameFrame {
 
 	public BalloonGameFrame(BalloonGameModel model) {
 		this.model = model;
-		this.facade = new BalloonGameFacade(model);
-		this.drawingPanel = new DrawingPanel(this, model);
+		this.facade = new BalloonGameFacade(this, model);
+		this.drawingPanel = new DrawingPanel(model, facade);
 		this.frame = createAndShowGUI();
 	}
 	
@@ -89,8 +89,7 @@ public class BalloonGameFrame {
 		newGameButton.addActionListener(event -> {
 			int count = slider.getValue();
             facade.startNewGame(count);
-            updateControlPanel();
-            repaint();
+            
 		});
 		panel.add(newGameButton, gbc);
 		
@@ -98,11 +97,8 @@ public class BalloonGameFrame {
 		gbc.gridy++;
 		JButton lockScoreButton = new JButton("Lock Score");
 		lockScoreButton.addActionListener(event -> {
-			model.setGameOver(true);
-			model.calculateScore();
-			model.updateHighScore();
-			updateControlPanel();
-			repaint();
+			facade.lockScore();
+			
 		});
 		panel.add(lockScoreButton, gbc);
 		
