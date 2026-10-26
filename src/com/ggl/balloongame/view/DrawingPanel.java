@@ -27,13 +27,9 @@ public class DrawingPanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		for (Balloon balloon : model.getValidBalloons()) {
-			g.setColor(balloon.getColor());
-			Point p = balloon.getCenterPoint();
-			int radius = balloon.getRadius();
-			int diameter = radius + radius;
-			g.fillOval(p.x - radius, p.y - radius, diameter, diameter);
-		}
+		        for (Balloon balloon : model.getValidBalloons()) {
+            balloon.draw(g);
+        }
 		
 		for (Balloon balloon : model.getPoppedBalloons()) {
 			g.setColor(Color.LIGHT_GRAY);

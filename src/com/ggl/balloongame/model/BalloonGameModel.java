@@ -58,7 +58,7 @@ public class BalloonGameModel {
 			Balloon balloon = balloonPrototypes[prototypeIndex].clone();
 			
 			balloon.setCenterPoint(new Point(x, y));
-
+            balloon = new ShadowBalloonDecorator(balloon);
 			if (!isTouching(balloon)) {
 				validBalloons.add(balloon);
 				index++;
