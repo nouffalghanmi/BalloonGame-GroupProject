@@ -2,7 +2,6 @@ package com.ggl.balloongame.view;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 
 import javax.swing.JPanel;
 
@@ -16,9 +15,13 @@ public class DrawingPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private final BalloonGameModel model;
+	private final BalloonRenderer renderer;
 
 	public DrawingPanel(BalloonGameModel model, BalloonGameFacade facade) {
     this.model = model;
+
+	this.renderer = new BorderDecorator(new BasicBalloonRenderer());
+
     this.setPreferredSize(model.getDrawingPanelDimension());
     this.addMouseListener(new BalloonListener(facade));
 }
@@ -28,19 +31,13 @@ public class DrawingPanel extends JPanel {
 		super.paintComponent(g);
 		
 		for (Balloon balloon : model.getValidBalloons()) {
-			g.setColor(balloon.getColor());
-			Point p = balloon.getCenterPoint();
-			int radius = balloon.getRadius();
-			int diameter = radius + radius;
-			g.fillOval(p.x - radius, p.y - radius, diameter, diameter);
+			
+			renderer.draw(g, balloon, balloon.getColor());
 		}
 		
 		for (Balloon balloon : model.getPoppedBalloons()) {
-			g.setColor(Color.LIGHT_GRAY);
-			Point p = balloon.getCenterPoint();
-			int radius = balloon.getRadius();
-			int diameter = radius + radius;
-			g.fillOval(p.x - radius, p.y - radius, diameter, diameter);
+         
+			renderer.draw(g, balloon, Color.LIGHT_GRAY);
 		}
 	}
 
