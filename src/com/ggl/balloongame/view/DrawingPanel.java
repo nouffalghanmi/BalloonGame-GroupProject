@@ -17,10 +17,10 @@ public class DrawingPanel extends JPanel {
 	
 	private final BalloonGameModel model;
 
-	public DrawingPanel(BalloonGameModel model, BalloonGameFacade facade) {
+	public DrawingPanel(BalloonGameFrame view, BalloonGameModel model,BalloonGameFacade facade) {
     this.model = model;
     this.setPreferredSize(model.getDrawingPanelDimension());
-    this.addMouseListener(new BalloonListener(facade));
+    this.addMouseListener(new BalloonListener(view, facade));
 }
 	
 	@Override

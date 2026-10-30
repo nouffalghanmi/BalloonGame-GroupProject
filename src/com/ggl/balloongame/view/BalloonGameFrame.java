@@ -29,8 +29,8 @@ public class BalloonGameFrame {
 
 	public BalloonGameFrame(BalloonGameModel model) {
 		this.model = model;
-		this.facade = new BalloonGameFacade(this, model);
-		this.drawingPanel = new DrawingPanel(model, facade);
+		this.facade = new BalloonGameFacade(model);
+		this.drawingPanel = new DrawingPanel(this, model, facade);
 		this.frame = createAndShowGUI();
 	}
 	
@@ -88,8 +88,9 @@ public class BalloonGameFrame {
 		JButton newGameButton = new JButton("New Game");
 		newGameButton.addActionListener(event -> {
 			int count = slider.getValue();
-            facade.startNewGame(count);
-            
+			facade.startNewGame(count);
+			updateControlPanel();
+			repaint();
 		});
 		panel.add(newGameButton, gbc);
 		
@@ -98,7 +99,8 @@ public class BalloonGameFrame {
 		JButton lockScoreButton = new JButton("Lock Score");
 		lockScoreButton.addActionListener(event -> {
 			facade.lockScore();
-			
+			updateControlPanel();
+			repaint();
 		});
 		panel.add(lockScoreButton, gbc);
 		
